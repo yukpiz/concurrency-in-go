@@ -1,10 +1,10 @@
 package main
 
 import (
-	"atomic"
 	"bytes"
 	"fmt"
 	"sync"
+	"sync/atomic"
 	"time"
 )
 
@@ -52,4 +52,10 @@ func main() {
 		}
 		fmt.Fprintf(&out, "\n%v tosses her hands up in exasperation!", name)
 	}
+
+	var peopleInHallway sync.WaitGroup
+	peopleInHallway.Add(2)
+	go walk(&peopleInHallway, "Alice")
+	go walk(&peopleInHallway, "Barbara")
+	peopleInHallway.Wait()
 }
